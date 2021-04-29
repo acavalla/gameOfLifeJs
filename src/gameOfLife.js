@@ -1,4 +1,4 @@
-
+var _ = require('underscore');
 module.exports = class Board {
   constructor() {
     this.live = []
@@ -13,11 +13,11 @@ module.exports = class Board {
 
   dead(location) {
     this.live = this.live.filter(function(value) {
-        return JSON.stringify(value) !== JSON.stringify(location);
+        return !_.isEqual(value, location)
     });
   }
 
-  tick = () => {
+  tick() {
     this.countNeighbours()
     this.updateLive()
   }
@@ -42,7 +42,7 @@ module.exports = class Board {
 
   increaseCount(spot) {
     for (var i=0; i<this.neighbTally.length; i++){
-      if (JSON.stringify(this.neighbTally[i].loc) === JSON.stringify(spot)){
+      if (_.isEqual(this.neighbTally[i].loc, spot)) {
         this.neighbTally[i].tally += 1
       }
     }
@@ -54,7 +54,7 @@ module.exports = class Board {
                       status: JSON.stringify(this.live).includes(spot) ? 1 : 0 } )
   }
 
-  updateLive = () => {
+  updateLive() {
     this.live = []
     this.neighbTally = this.neighbTally.filter(x => this.livingConditions(x));
     for (var i=0; i<this.neighbTally.length; i++){
