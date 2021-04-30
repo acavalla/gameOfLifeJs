@@ -23,48 +23,72 @@ describe('Board class', function() {
     });
   });
 
-  describe('.livingConditions', function(){
-    h = [{ loc: [ 2, 1 ], tally: 2, status: 1 },
-         { loc: [ 2, 2 ], tally: 3, status: 0 },
-         { loc: [ 0, 0 ], tally: 1, status: 1 }]
-    it('returns true when living cell has two neighbours', function() {
-      expect(board.livingConditions(h[0])).toBe(true);
-    });
-
-    it('returns true when dead cell has three live neighbours', function() {
-      expect(board.livingConditions(h[1])).toBe(true);
-    });
-
-    it('returns false when live cell has one live neighbour', function() {
-      expect(board.livingConditions(h[2])).toBe(false);
-    });
-  });
+  // describe('.livingConditions', function(){
+  //   h = [{ loc: [ 2, 1 ], tally: 2, status: 1 },
+  //        { loc: [ 2, 2 ], tally: 3, status: 0 },
+  //        { loc: [ 0, 0 ], tally: 1, status: 1 }]
+  //   it('returns true when living cell has two neighbours', function() {
+  //     expect(board.livingConditions(h[0])).toBe(true);
+  //   });
+  //
+  //   it('returns true when dead cell has three live neighbours', function() {
+  //     expect(board.livingConditions(h[1])).toBe(true);
+  //   });
+  //
+  //   it('returns false when live cell has one live neighbour', function() {
+  //     expect(board.livingConditions(h[2])).toBe(false);
+  //   });
+  // });
 
   describe('.countNeighbours', function(){
 
-    it('tallies one with one live neighbour', function() {
-      k = { loc: [ -1, -1 ], tally: 1, status: 0 }
+    it('knows a live cell with no neighbours dies', function() {
       board.alive([0,0])
       board.countNeighbours()
-      expect(board.neighbTally[0]).toMatchObject(k);
+      expect(board.newLive).toMatchObject([])
     });
 
-    it('tallies two with two live neighbours', function() {
-      l = { loc: [ -1, 1 ], tally: 2, status: 0 }
+    it('knows a live cell with one neighbour dies', function() {
       board.alive([0,0])
       board.alive([0,1])
       board.countNeighbours()
-      expect(board.neighbTally[2]).toMatchObject(l);
+      expect(board.newLive).toMatchObject([]);
+    });
+
+    it('knows a live cell with two neighbours lives', function() {
+      board.alive([-1,2])
+      board.alive([0,1])
+      board.alive([1,0])
+      board.countNeighbours()
+      expect(board.newLive).toMatchObject([[0,1]]);
+    });
+
+    it('knows dead cell with three neighbours is born', function() {
+      board.alive([-1,-1])
+      board.alive([0,1])
+      board.alive([1,0])
+      board.countNeighbours()
+      expect(board.newLive).toMatchObject([[0,0]]);
+    });
+
+    it('knows live cell with three neighbours lives', function() {
+      board.alive([-1,2])
+      board.alive([0,1])
+      board.alive([1,0])
+      board.alive([-1,0])
+      board.countNeighbours()
+      expect(board.newLive).toMatchObject([[-1,1], [0,0], [0,1]]);
     });
   })
 
   describe('.tick', function(){
-    it('updates live with new locations', function() {
-      board.alive([0,0])
+    it('updates live with newLive', function() {
+      board.alive([-1,2])
       board.alive([0,1])
       board.alive([1,0])
+      board.alive([-1,0])
       board.tick()
-      expect(board.live[2]).toMatchObject([1,1])
+      expect(board.live).toMatchObject([[-1,1], [0,0], [0,1]])
     })
   })
 

@@ -5,6 +5,7 @@ module.exports = class Board {
     this.NEIGHBOURS = [[-1, -1], [-1, 0], [-1, 1],
                   [0, -1], [0, 1],
                   [1, -1], [1, 0], [1, 1]]
+    this.newLive = []
   }
 
   alive(location) {
@@ -23,46 +24,47 @@ module.exports = class Board {
   }
 
   countNeighbours() {
-    this.neighbTally = []
-    for (var i=0; i < this.live.length; i++) {
-      this.labelNeighbours(this.live[i])
+    var startRow = this.live.sort()[0][0]-1
+    var endRow = this.live[this.live.length-1][0]+1
+    var startCol = 0
+    var endCol = 0
+    for(var i=0; i<this.live.length; i++) {
+      if (startCol >= this.live[i][1]){
+        startCol = this.live[i][1] -1
+      }
     }
-  }
-
-  labelNeighbours(loc) {
-    for (var i=0; i < this.NEIGHBOURS.length; i++) {
-      var spot = [loc[0] + this.NEIGHBOURS[i][0], loc[1] + this.NEIGHBOURS[i][1]]
-      this.isInHash(spot) ? this.increaseCount(spot) : this.addToHash(spot)
+    for(var i=0; i<this.live.length; i++) {
+      if (endCol <= this.live[i][1]){
+        endCol = this.live[i][1] + 1
+      }
     }
-  }
-
-  isInHash(spot){
-    return (this.neighbTally.map(o => JSON.stringify(Object.values(o['loc']))).includes(JSON.stringify(spot)))
-  }
-
-  increaseCount(spot) {
-    for (var i=0; i<this.neighbTally.length; i++){
-      if (_.isEqual(this.neighbTally[i].loc, spot)) {
-        this.neighbTally[i].tally += 1
+    for (var i= startRow; i<endRow; i++) {
+      for (var j = startCol; j<endCol; j++) {
+        this.labelNeighbours(i, j)
       }
     }
   }
 
-  addToHash(spot) {
-    this.neighbTally.push( { loc: spot,
-                      tally: 1,
-                      status: JSON.stringify(this.live).includes(spot) ? 1 : 0 } )
-  }
-
-  updateLive() {
-    this.live = []
-    this.neighbTally = this.neighbTally.filter(x => this.livingConditions(x));
-    for (var i=0; i<this.neighbTally.length; i++){
-      this.alive(this.neighbTally[i].loc)
+  labelNeighbours = (row, column) => {
+    var count = 0
+    var spot = [row, column]
+    for (var k = 0; k < this.NEIGHBOURS.length; k++) {
+      var neighbour = [row + this.NEIGHBOURS[k][0], column + this.NEIGHBOURS[k][1]]
+      if (JSON.stringify(this.live).includes(JSON.stringify(neighbour))) {
+        count += 1
+      }
+    }
+    if (this.livingConditions(count,spot)) {
+      this.newLive.push(spot)
     }
   }
 
-  livingConditions(hash) {
-    return (hash.tally === 3 || (hash.tally === 2 && hash.status === 1))
+  livingConditions(count,spot) {
+    return (count === 3 || count === 2 && JSON.stringify(this.live).includes(JSON.stringify(spot)))
+  }
+
+  updateLive() {
+    this.live = this.newLive
+    this.newLive = []
   }
 }
