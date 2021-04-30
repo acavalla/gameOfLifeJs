@@ -26,10 +26,7 @@ module.exports = class Board {
   countNeighbours() {
     var startRow = this.live.sort()[0][0]-1
     var endRow = this.live[this.live.length-1][0]+1
-
-    this.endCol = 0
-    this.startLimit()
-    this.endLimit()
+    this.calcLimits()
     for (var i= startRow; i<endRow; i++) {
       for (var j = this.startCol; j<this.endCol; j++) {
         this.labelNeighbours(i, j)
@@ -37,7 +34,13 @@ module.exports = class Board {
     }
   }
 
+  calcLimits() {
+    this.startLimit()
+    this.endLimit()
+  }
+
   endLimit(){
+    this.endCol = 0
     for(var i=0; i<this.live.length; i++) {
       if (this.endCol <= this.live[i][1]){
         this.endCol = this.live[i][1] + 1

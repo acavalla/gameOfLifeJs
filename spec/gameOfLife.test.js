@@ -90,5 +90,17 @@ describe('Board class', function() {
       board.tick()
       expect(board.live).toMatchObject([[-1,1], [0,0], [0,1]])
     })
+
+    it('correctly calculates subsequent ticks', function() {
+      board.alive([-1,2])
+      board.alive([0,1])
+      board.alive([1,0])
+      board.alive([-1,0])
+      board.tick()
+      board.tick()
+      expect(board.live).toMatchObject([[-1,0], [-1,1], [0,0], [0,1]])
+    })
+
+
   })
 })
