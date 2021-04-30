@@ -26,21 +26,29 @@ module.exports = class Board {
   countNeighbours() {
     var startRow = this.live.sort()[0][0]-1
     var endRow = this.live[this.live.length-1][0]+1
-    var startCol = 0
-    var endCol = 0
-    for(var i=0; i<this.live.length; i++) {
-      if (startCol >= this.live[i][1]){
-        startCol = this.live[i][1] -1
-      }
-    }
-    for(var i=0; i<this.live.length; i++) {
-      if (endCol <= this.live[i][1]){
-        endCol = this.live[i][1] + 1
-      }
-    }
+    this.startCol = 0
+    this.endCol = 0
+    this.startLimit()
+    this.endLimit()
     for (var i= startRow; i<endRow; i++) {
-      for (var j = startCol; j<endCol; j++) {
+      for (var j = this.startCol; j<this.endCol; j++) {
         this.labelNeighbours(i, j)
+      }
+    }
+  }
+
+  endLimit(){
+    for(var i=0; i<this.live.length; i++) {
+      if (this.endCol <= this.live[i][1]){
+        this.endCol = this.live[i][1] + 1
+      }
+    }
+  }
+
+  startLimit() {
+    for(var i=0; i<this.live.length; i++) {
+      if (this.startCol >= this.live[i][1]){
+        this.startCol = this.live[i][1] -1
       }
     }
   }
