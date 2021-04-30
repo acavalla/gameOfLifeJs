@@ -26,7 +26,7 @@ module.exports = class Board {
   countNeighbours() {
     var startRow = this.live.sort()[0][0]-1
     var endRow = this.live[this.live.length-1][0]+1
-    this.startCol = 0
+
     this.endCol = 0
     this.startLimit()
     this.endLimit()
@@ -46,6 +46,7 @@ module.exports = class Board {
   }
 
   startLimit() {
+    this.startCol = 0
     for(var i=0; i<this.live.length; i++) {
       if (this.startCol >= this.live[i][1]){
         this.startCol = this.live[i][1] -1
