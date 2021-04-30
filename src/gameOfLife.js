@@ -1,4 +1,4 @@
-var _ = require('underscore');
+const _ = require('lodash');
 module.exports = class Board {
   constructor() {
     this.live = []
@@ -50,7 +50,7 @@ module.exports = class Board {
     var spot = [row, column]
     for (var k = 0; k < this.NEIGHBOURS.length; k++) {
       var neighbour = [row + this.NEIGHBOURS[k][0], column + this.NEIGHBOURS[k][1]]
-      if (JSON.stringify(this.live).includes(JSON.stringify(neighbour))) {
+      if (this.including(this.live,neighbour)) {
         count += 1
       }
     }
@@ -60,7 +60,11 @@ module.exports = class Board {
   }
 
   livingConditions(count,spot) {
-    return (count === 3 || count === 2 && JSON.stringify(this.live).includes(JSON.stringify(spot)))
+    return (count === 3 || (count === 2 && this.including(this.live, spot)))
+  }
+
+  including(x, y) {
+    return (JSON.stringify(x).includes(JSON.stringify(y)))
   }
 
   updateLive() {

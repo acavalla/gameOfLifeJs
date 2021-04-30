@@ -91,24 +91,4 @@ describe('Board class', function() {
       expect(board.live).toMatchObject([[-1,1], [0,0], [0,1]])
     })
   })
-
-  // test('adds 1 + 2 to equal 3', () => {
-  //   skip
-  //   expect(sum(1, 2)).toBe(3);
-  // });
-  //
-  // test('two plus two is four', () => {
-  //   skip
-  //   expect(sum(2, 2)).not.toBe(5);
-  // });
-  //
-  // test('object assignment', () => {
-  //   const data = {one: 1};
-  //   data['two'] = 2;
-  //   expect(data).toEqual({one: 1, two: 2});
-  // });
-  // beforeEach(function() {
-  //   thermostat = new Thermostat();
-  // });
-  //
 })
