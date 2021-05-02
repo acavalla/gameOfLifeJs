@@ -8,52 +8,48 @@ module.exports = class Board {
     this.newLive = []
   }
 
-  alive(location) {
+  alive = (location) => {
     this.live.push(location)
   }
 
-  dead(location) {
+  dead = (location) => {
     this.live = this.live.filter(function(value) {
-        return !_.isEqual(value, location)
+        !_.isEqual(value, location)
+        // !this.isIncluding(location, value)
     });
   }
 
-  tick() {
+  tick = () => {
     this.countNeighbours()
     this.updateLive()
   }
 
-  countNeighbours() {
-    var startRow = this.live.sort()[0][0]-1
-    var endRow = this.live[this.live.length-1][0]+1
+  countNeighbours = () => {
     this.calcLimits()
-    for (var i= startRow; i<endRow; i++) {
+    for (var i= this.startRow; i<this.endRow; i++) {
       for (var j = this.startCol; j<this.endCol; j++) {
         this.labelNeighbours(i, j)
       }
     }
   }
 
-  calcLimits() {
-    this.startLimit()
-    this.endLimit()
+  calcLimits = () => {
+    this.rowLimits()
+    this.colLimits()
   }
 
-  endLimit(){
+  rowLimits = () => {
+    this.startRow = this.live.sort()[0][0]-1
+    this.endRow = this.live[this.live.length-1][0]+1
+  }
+
+  colLimits = () => {
+    this.startCol = 0
     this.endCol = 0
     for(var i=0; i<this.live.length; i++) {
-      if (this.endCol <= this.live[i][1]){
-        this.endCol = this.live[i][1] + 1
-      }
-    }
-  }
-
-  startLimit() {
-    this.startCol = 0
-    for(var i=0; i<this.live.length; i++) {
-      if (this.startCol >= this.live[i][1]){
-        this.startCol = this.live[i][1] -1
-      }
+      var x = this.live[i][1]
+      if (this.endCol <= x) this.endCol = x + 1;
+      if (this.startCol >= x) this.startCol = x - 1;
     }
   }
 
@@ -62,7 +58,7 @@ module.exports = class Board {
     var spot = [row, column]
     for (var k = 0; k < this.NEIGHBOURS.length; k++) {
       var neighbour = [row + this.NEIGHBOURS[k][0], column + this.NEIGHBOURS[k][1]]
-      if (this.including(this.live,neighbour)) {
+      if (this.isIncluding(this.live, neighbour)) {
         count += 1
       }
     }
@@ -71,15 +67,15 @@ module.exports = class Board {
     }
   }
 
-  livingConditions(count,spot) {
-    return (count === 3 || (count === 2 && this.including(this.live, spot)))
+  livingConditions = (count,spot) => {
+    return count === 3 || (count === 2 && this.isIncluding(this.live, spot))
   }
 
-  including(x, y) {
-    return (JSON.stringify(x).includes(JSON.stringify(y)))
+  isIncluding = (x, y) => {
+    return JSON.stringify(x).includes(JSON.stringify(y))
   }
 
-  updateLive() {
+  updateLive = () => {
     this.live = this.newLive
     this.newLive = []
   }

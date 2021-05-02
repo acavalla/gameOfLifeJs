@@ -3,7 +3,6 @@ const { test, expect } = require('@jest/globals');
 const Board = require('../src/gameOfLife.js');
 
 describe('Board class', function() {
-
   beforeEach(function() {
     board = new Board();
   });
@@ -23,25 +22,7 @@ describe('Board class', function() {
     });
   });
 
-  // describe('.livingConditions', function(){
-  //   h = [{ loc: [ 2, 1 ], tally: 2, status: 1 },
-  //        { loc: [ 2, 2 ], tally: 3, status: 0 },
-  //        { loc: [ 0, 0 ], tally: 1, status: 1 }]
-  //   it('returns true when living cell has two neighbours', function() {
-  //     expect(board.livingConditions(h[0])).toBe(true);
-  //   });
-  //
-  //   it('returns true when dead cell has three live neighbours', function() {
-  //     expect(board.livingConditions(h[1])).toBe(true);
-  //   });
-  //
-  //   it('returns false when live cell has one live neighbour', function() {
-  //     expect(board.livingConditions(h[2])).toBe(false);
-  //   });
-  // });
-
   describe('.countNeighbours', function(){
-
     it('knows a live cell with no neighbours dies', function() {
       board.alive([0,0])
       board.countNeighbours()
@@ -100,7 +81,5 @@ describe('Board class', function() {
       board.tick()
       expect(board.live).toMatchObject([[-1,0], [-1,1], [0,0], [0,1]])
     })
-
-
   })
 })
