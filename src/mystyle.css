@@ -1,0 +1,17 @@
+.wrapper {
+  display: inline-grid;
+  grid-template-columns: 50px 50px 50px 50px;
+  border-bottom: 1px solid black;
+  border-left: 1px solid black;
+}
+
+.wrapper > div {
+  padding: 15px;
+  text-align: center;
+  border-top: 1px solid black;
+  border-right: 1px solid black;
+}
+
+/* body {
+ background:pink;
+} */

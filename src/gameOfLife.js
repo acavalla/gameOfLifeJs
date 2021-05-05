@@ -15,7 +15,6 @@ module.exports = class Board {
   dead = (location) => {
     this.live = this.live.filter(function(value) {
         !_.isEqual(value, location)
-        // !this.isIncluding(location, value)
     });
   }
 
@@ -44,8 +43,7 @@ module.exports = class Board {
   }
 
   colLimits = () => {
-    this.startCol = 0
-    this.endCol = 0
+    [this.startCol, this.endCol] = [0, 0]
     for(var i=0; i<this.live.length; i++) {
       var x = this.live[i][1]
       if (this.endCol <= x) this.endCol = x + 1;
