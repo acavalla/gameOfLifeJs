@@ -1,5 +1,5 @@
 const _ = require('lodash');
-module.exports = class Board {
+class Board {
   constructor() {
     this.live = []
     this.NEIGHBOURS = [[-1, -1], [-1, 0], [-1, 1],
@@ -78,3 +78,4 @@ module.exports = class Board {
     this.newLive = []
   }
 }
+module.exports = Board;
