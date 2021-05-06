@@ -56,9 +56,10 @@ function getSquare(canvas, evt) {
 canvas.addEventListener('click', function(evt) {
     var mousePos = getSquare(canvas, evt);
     fillSquare(context, mousePos.x, mousePos.y)
-    board.alive([(mousePos.y-1)%10, (mousePos.x-1)%10])
-    //   console.log(mousePos.y)
+    board.alive([(mousePos.y-1)/10, (mousePos.x-1)/10])
+    // console.log(mousePos.y-1)
     // console.log(board.live[0])
+    // console.log(board.live[1])
 }, false);
 
 function fillSquare(context, x, y){
