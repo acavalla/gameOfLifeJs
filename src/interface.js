@@ -3,12 +3,14 @@ let canvas;
 let context;
 let board;
 
+canvas = document.getElementById('canvas');
+context = canvas.getContext('2d');
 window.onload = init;
 
 function init(){
     // Get a reference to the canvas
-    canvas = document.getElementById('canvas');
-    context = canvas.getContext('2d');
+    // canvas = document.getElementById('canvas');
+    // context = canvas.getContext('2d');
     board = new Board
     draw();
 }
@@ -19,13 +21,11 @@ function draw(){
 
 // Draw a rectangle
  // x start coord, y start coord, x length, y length
-
-
-drawLines()
+drawGrid()
 drawCells()
 }
 
-function drawLines(){
+function drawGrid(){
   drawHorizontal()
   drawVertical()
   context.stroke();
@@ -44,6 +44,26 @@ function drawVertical(){
     context.lineTo(i, 400);
   }
 }
+
+function getSquare(canvas, evt) {
+    var rect = canvas.getBoundingClientRect();
+    return {
+        x: 1 + (evt.clientX - rect.left) - (evt.clientX - rect.left)%10,
+        y: 1 + (evt.clientY - rect.top) - (evt.clientY - rect.top)%10
+    };
+}
+
+canvas.addEventListener('click', function(evt) {
+    var mousePos = getSquare(canvas, evt);
+    fillSquare(context, mousePos.x, mousePos.y)
+    console.log(mousePos.x)
+}, false);
+
+function fillSquare(context, x, y){
+    context.fillStyle = "gray"
+    context.fillRect(x,y,8,8);
+}
+
 function drawCells(){
   // board.alive([0,1])
   // board.alive([25,3])
