@@ -56,7 +56,9 @@ function getSquare(canvas, evt) {
 canvas.addEventListener('click', function(evt) {
     var mousePos = getSquare(canvas, evt);
     fillSquare(context, mousePos.x, mousePos.y)
-    console.log(mousePos.x)
+    board.alive([(mousePos.y-1)%10, (mousePos.x-1)%10])
+    //   console.log(mousePos.y)
+    // console.log(board.live[0])
 }, false);
 
 function fillSquare(context, x, y){
@@ -65,8 +67,6 @@ function fillSquare(context, x, y){
 }
 
 function drawCells(){
-  // board.alive([0,1])
-  // board.alive([25,3])
   context.fillStyle = '#ffffff';
   for (var i = 0; i<board.live.length; i++) {
     context.fillRect(board.live[i][0] * 10 + 1, board.live[i][1] * 10 + 1, 8, 8);
