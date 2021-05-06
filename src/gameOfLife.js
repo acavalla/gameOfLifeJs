@@ -1,4 +1,4 @@
-const _ = require('lodash');
+// const _ = require('lodash');
 class Board {
   constructor() {
     this.live = []
@@ -78,4 +78,4 @@ class Board {
     this.newLive = []
   }
 }
-module.exports = Board;
+// module.exports = Board;
