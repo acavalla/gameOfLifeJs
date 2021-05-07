@@ -65,16 +65,27 @@ canvas.addEventListener('click', function(evt) {
       board.dead([(mousePos.y-1)/10, (mousePos.x-1)/10])
       // console.log(board.live)
     }
+    // console.log('.button');
 }, false);
+
+document.querySelector('.button').addEventListener('click', function(evt) {
+  if(board.live.length === 0){
+    //add to innerHTML 'Sorry! Game over :('
+  } else {
+    drawCells('#F31515')
+    board.tick()
+    drawCells('gray')
+  }
+})
 
 function fillSquare(context, x, y, colour){
     context.fillStyle = colour
     context.fillRect(x,y,8,8);
 }
 
-function drawCells(){
-  context.fillStyle = '#ffffff';
+function drawCells(colour){
+  context.fillStyle = colour;
   for (var i = 0; i<board.live.length; i++) {
-    context.fillRect(board.live[i][0] * 10 + 1, board.live[i][1] * 10 + 1, 8, 8);
+    context.fillRect(board.live[i][1] * 10 + 1, board.live[i][0] * 10 + 1, 8, 8);
   }
 }
