@@ -55,15 +55,20 @@ function getSquare(canvas, evt) {
 
 canvas.addEventListener('click', function(evt) {
     var mousePos = getSquare(canvas, evt);
-    fillSquare(context, mousePos.x, mousePos.y)
-    board.alive([(mousePos.y-1)/10, (mousePos.x-1)/10])
-    // console.log(mousePos.y-1)
-    // console.log(board.live[0])
-    // console.log(board.live[1])
+    var pixel = context.getImageData(mousePos.x, mousePos.y, 1, 1).data;
+    if (pixel[0] !== 128){
+      fillSquare(context, mousePos.x, mousePos.y, "gray")
+      board.alive([(mousePos.y-1)/10, (mousePos.x-1)/10])
+      // console.log(board.live)
+    } else {
+      fillSquare(context, mousePos.x, mousePos.y, "#F31515")
+      board.dead([(mousePos.y-1)/10, (mousePos.x-1)/10])
+      // console.log(board.live)
+    }
 }, false);
 
-function fillSquare(context, x, y){
-    context.fillStyle = "gray"
+function fillSquare(context, x, y, colour){
+    context.fillStyle = colour
     context.fillRect(x,y,8,8);
 }
 

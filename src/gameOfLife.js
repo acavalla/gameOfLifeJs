@@ -14,7 +14,7 @@ class Board {
 
   dead = (location) => {
     this.live = this.live.filter(function(value) {
-        !_.isEqual(value, location)
+      return !JSON.stringify(value).includes(JSON.stringify(location))
     });
   }
 
