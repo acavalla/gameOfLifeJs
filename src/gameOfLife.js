@@ -1,4 +1,3 @@
-// const _ = require('lodash');
 class Board {
   constructor() {
     this.live = []
