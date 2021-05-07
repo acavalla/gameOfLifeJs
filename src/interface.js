@@ -57,15 +57,13 @@ canvas.addEventListener('click', function(evt) {
     var mousePos = getSquare(canvas, evt);
     var pixel = context.getImageData(mousePos.x, mousePos.y, 1, 1).data;
     if (pixel[0] !== 128){
-      fillSquare(context, mousePos.x, mousePos.y, "gray")
+      fillSquare(mousePos.x, mousePos.y, "gray")
       board.alive([(mousePos.y-1)/10, (mousePos.x-1)/10])
       // console.log(board.live)
     } else {
-      fillSquare(context, mousePos.x, mousePos.y, "#F31515")
+      fillSquare(mousePos.x, mousePos.y, "#F31515")
       board.dead([(mousePos.y-1)/10, (mousePos.x-1)/10])
-      // console.log(board.live)
     }
-    // console.log('.button');
 }, false);
 
 document.querySelector('.button').addEventListener('click', function(evt) {
@@ -78,14 +76,13 @@ document.querySelector('.button').addEventListener('click', function(evt) {
   }
 })
 
-function fillSquare(context, x, y, colour){
+function fillSquare(x, y, colour){
     context.fillStyle = colour
     context.fillRect(x,y,8,8);
 }
 
 function drawCells(colour){
-  context.fillStyle = colour;
   for (var i = 0; i<board.live.length; i++) {
-    context.fillRect(board.live[i][1] * 10 + 1, board.live[i][0] * 10 + 1, 8, 8);
+    fillSquare(board.live[i][1] * 10 + 1, board.live[i][0] * 10 + 1, colour);
   }
 }
