@@ -19,61 +19,61 @@ class Board {
   }
 
   tick = () => {
-    this.countNeighbours()
-    this.updateLive()
+    this._countNeighbours()
+    this._updateLive()
   }
 
-  countNeighbours = () => {
-    this.calcLimits()
-    for (var i= this.startRow; i<this.endRow; i++) {
-      for (var j = this.startCol; j<this.endCol; j++) {
-        this.labelNeighbours(i, j)
+  _countNeighbours = () => {
+    this._calcLimits()
+    for (var i= this._startRow; i<this._endRow; i++) {
+      for (var j = this._startCol; j<this._endCol; j++) {
+        this._labelNeighbours(i, j)
       }
     }
   }
 
-  calcLimits = () => {
-    this.rowLimits()
-    this.colLimits()
+  _calcLimits = () => {
+    this._rowLimits()
+    this._colLimits()
   }
 
-  rowLimits = () => {
-    this.startRow = this.live.sort()[0][0]-1
-    this.endRow = this.live[this.live.length-1][0]+1
+  _rowLimits = () => {
+    this._startRow = this.live.sort()[0][0]-1
+    this._endRow = this.live[this.live.length-1][0]+1
   }
 
-  colLimits = () => {
-    [this.startCol, this.endCol] = [0, 0]
+  _colLimits = () => {
+    [this._startCol, this._endCol] = [0, 0]
     for(var i=0; i<this.live.length; i++) {
       var x = this.live[i][1]
-      if (this.endCol <= x) this.endCol = x + 1;
-      if (this.startCol >= x) this.startCol = x - 1;
+      if (this._endCol <= x) this._endCol = x + 1;
+      if (this._startCol >= x) this._startCol = x - 1;
     }
   }
 
-  labelNeighbours = (row, column) => {
+  _labelNeighbours = (row, column) => {
     var count = 0
     var spot = [row, column]
     for (var k = 0; k < this.NEIGHBOURS.length; k++) {
       var neighbour = [row + this.NEIGHBOURS[k][0], column + this.NEIGHBOURS[k][1]]
-      if (this.isIncluding(this.live, neighbour)) {
+      if (this._isIncluding(this.live, neighbour)) {
         count += 1
       }
     }
-    if (this.livingConditions(count,spot)) {
+    if (this._livingConditions(count,spot)) {
       this.newLive.push(spot)
     }
   }
 
-  livingConditions = (count,spot) => {
-    return count === 3 || (count === 2 && this.isIncluding(this.live, spot))
+  _livingConditions = (count,spot) => {
+    return count === 3 || (count === 2 && this._isIncluding(this.live, spot))
   }
 
-  isIncluding = (x, y) => {
+  _isIncluding = (x, y) => {
     return JSON.stringify(x).includes(JSON.stringify(y))
   }
 
-  updateLive = () => {
+  _updateLive = () => {
     this.live = this.newLive
     this.newLive = []
   }
