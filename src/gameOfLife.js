@@ -19,9 +19,17 @@ class Board {
   }
 
   tick = () => {
+    // console.log(this.live)
     this._countNeighbours()
     this._updateLive()
   }
+
+
+  sortLive = () => {
+    this.live = this.live.sort(function(a, b) {
+      return a[0] - b[0];
+    })
+  };
 
   _countNeighbours = () => {
     this._calcLimits()
@@ -38,7 +46,8 @@ class Board {
   }
 
   _rowLimits = () => {
-    this._startRow = this.live.sort()[0][0]-1
+    this.sortLive()
+    this._startRow = this.live[0][0]-1
     this._endRow = this.live[this.live.length-1][0]+1
   }
 
