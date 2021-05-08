@@ -5,6 +5,7 @@ class Board {
                   [0, -1], [0, 1],
                   [1, -1], [1, 0], [1, 1]]
     this.newLive = []
+    // const liveColour = "gray"
   }
 
   alive = (location) => {
@@ -42,11 +43,12 @@ class Board {
   }
 
   _colLimits = () => {
-    [this._startCol, this._endCol] = [0, 0]
+    this._startCol = this.live[0][1]
+    this._endCol = this.live[0][1]
     for(var i=0; i<this.live.length; i++) {
       var x = this.live[i][1]
-      if (this._endCol <= x) this._endCol = x + 1;
       if (this._startCol >= x) this._startCol = x - 1;
+      if (this._endCol <= x) this._endCol = x + 1;
     }
   }
 
@@ -55,10 +57,14 @@ class Board {
     var spot = [row, column]
     for (var k = 0; k < this.NEIGHBOURS.length; k++) {
       var neighbour = [row + this.NEIGHBOURS[k][0], column + this.NEIGHBOURS[k][1]]
+      console.log(`k: ${k}, spot: ${spot}, neighbour: ${neighbour}, count: ${count}`)
       if (this._isIncluding(this.live, neighbour)) {
         count += 1
+        console.log(`k: ${k}, spot: ${spot}, neighbour: ${neighbour}, count: ${count}`)
+
       }
     }
+    console.log("after for")
     if (this._livingConditions(count,spot)) {
       this.newLive.push(spot)
     }

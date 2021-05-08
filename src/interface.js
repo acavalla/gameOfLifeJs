@@ -2,10 +2,15 @@
 let canvas;
 let context;
 let board;
+let liveColour;
+let deadColour;
 
 canvas = document.getElementById('canvas');
 context = canvas.getContext('2d');
+liveColour = 'gray';
+deadColour = '#F31515'
 window.onload = init;
+
 
 function init(){
     // Get a reference to the canvas
@@ -59,7 +64,7 @@ canvas.addEventListener('click', function(evt) {
     if (pixel[0] !== 128){
       fillSquare(mousePos.x, mousePos.y, "gray")
       board.alive([(mousePos.y-1)/10, (mousePos.x-1)/10])
-      // console.log(board.live)
+      console.log(board.live)
     } else {
       fillSquare(mousePos.x, mousePos.y, "#F31515")
       board.dead([(mousePos.y-1)/10, (mousePos.x-1)/10])
