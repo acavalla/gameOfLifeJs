@@ -23,9 +23,9 @@ class Board {
   }
 
 
-  sortLive = () => {
+  sortLive = (x) => {
     this.live = this.live.sort(function(a, b) {
-      return a[0] - b[0];
+      return a[x] - b[x];
     })
   };
 
@@ -44,7 +44,7 @@ class Board {
   }
 
   _rowLimits = () => {
-    this.sortLive()
+    this.sortLive(0)
     this._startRow = this.live[0][0]-1
     this._endRow = this.live[this.live.length-1][0]+1
   }

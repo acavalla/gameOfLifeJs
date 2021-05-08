@@ -46,7 +46,9 @@ function getSquare(canvas, evt) {
 canvas.addEventListener('click', function(evt) {
     var mousePos = getSquare(canvas, evt);
     var pixel = context.getImageData(mousePos.x, mousePos.y, 1, 1).data;
-    if (pixel[0] !== liveColour){
+    console.log(pixel)
+    console.log(liveColour.substr(4,3))
+    if (pixel[0] !== parseInt(liveColour.substr(4,3))){
       fillSquare(mousePos.x, mousePos.y, liveColour)
       board.alive([(mousePos.y-1)/10, (mousePos.x-1)/10])
     } else {
