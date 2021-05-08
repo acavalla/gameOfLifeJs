@@ -24,8 +24,8 @@ class Board {
 
   _countNeighbours = () => {
     this._calcLimits()
-    for (var i= this._startRow; i<this._endRow; i++) {
-      for (var j = this._startCol; j<this._endCol; j++) {
+    for (var i= this._startRow; i<=this._endRow; i++) {
+      for (var j = this._startCol; j<=this._endCol; j++) {
         this._labelNeighbours(i, j)
       }
     }
