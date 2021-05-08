@@ -50,13 +50,9 @@ class Board {
   }
 
   _colLimits = () => {
-    this._startCol = this.live[0][1]
-    this._endCol = this.live[0][1]
-    for(var i=0; i<this.live.length; i++) {
-      var x = this.live[i][1]
-      if (this._startCol >= x) this._startCol = x - 1;
-      if (this._endCol <= x) this._endCol = x + 1;
-    }
+    this.sortLive(1)
+    this._startCol = this.live[0][1]-1
+    this._endCol = this.live[this.live.length-1][1]+1
   }
 
   _labelNeighbours = (row, column) => {
