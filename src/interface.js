@@ -7,44 +7,29 @@ let deadColour;
 
 canvas = document.getElementById('canvas');
 context = canvas.getContext('2d');
-liveColour = 'gray';
+liveColour = "rgb(155, 102, 102)";
 deadColour = '#F31515'
 window.onload = init;
 
-
 function init(){
-    // Get a reference to the canvas
-    // canvas = document.getElementById('canvas');
-    // context = canvas.getContext('2d');
     board = new Board
     draw();
 }
+
 function draw(){
-
-// Get a random color, red or blue
-// let randomColor = Math.random() > 0.5? '#ff8080' : '#0099b0';
-
-// Draw a rectangle
- // x start coord, y start coord, x length, y length
-drawGrid()
-drawCells()
+  drawGrid()
+  drawCells()
 }
 
 function drawGrid(){
-  drawHorizontal()
-  drawVertical()
+  drawLines()
   context.stroke();
 }
 
-function drawHorizontal(){
-  for (var i = 10; i < 400; i += 10) {
+function drawLines(){
+  for (var i = 10; i < 750; i += 10) {
     context.moveTo(0, i);
     context.lineTo(750, i);
-  }
-}
-
-function drawVertical(){
-  for (var i = 10; i < 750; i += 10) {
     context.moveTo(i, 0);
     context.lineTo(i, 400);
   }
@@ -61,12 +46,11 @@ function getSquare(canvas, evt) {
 canvas.addEventListener('click', function(evt) {
     var mousePos = getSquare(canvas, evt);
     var pixel = context.getImageData(mousePos.x, mousePos.y, 1, 1).data;
-    if (pixel[0] !== 128){
-      fillSquare(mousePos.x, mousePos.y, "gray")
+    if (pixel[0] !== liveColour){
+      fillSquare(mousePos.x, mousePos.y, liveColour)
       board.alive([(mousePos.y-1)/10, (mousePos.x-1)/10])
-      console.log(board.live)
     } else {
-      fillSquare(mousePos.x, mousePos.y, "#F31515")
+      fillSquare(mousePos.x, mousePos.y, deadColour)
       board.dead([(mousePos.y-1)/10, (mousePos.x-1)/10])
     }
 }, false);
@@ -75,9 +59,9 @@ document.querySelector('.button').addEventListener('click', function(evt) {
   if(board.live.length === 0){
     //add to innerHTML 'Sorry! Game over :('
   } else {
-    drawCells('#F31515')
+    drawCells(deadColour)
     board.tick()
-    drawCells('gray')
+    drawCells(liveColour)
   }
 })
 

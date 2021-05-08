@@ -5,7 +5,6 @@ class Board {
                   [0, -1], [0, 1],
                   [1, -1], [1, 0], [1, 1]]
     this.newLive = []
-    // const liveColour = "gray"
   }
 
   alive = (location) => {
@@ -19,7 +18,6 @@ class Board {
   }
 
   tick = () => {
-    // console.log(this.live)
     this._countNeighbours()
     this._updateLive()
   }
@@ -66,14 +64,10 @@ class Board {
     var spot = [row, column]
     for (var k = 0; k < this.NEIGHBOURS.length; k++) {
       var neighbour = [row + this.NEIGHBOURS[k][0], column + this.NEIGHBOURS[k][1]]
-      console.log(`k: ${k}, spot: ${spot}, neighbour: ${neighbour}, count: ${count}`)
       if (this._isIncluding(this.live, neighbour)) {
         count += 1
-        console.log(`k: ${k}, spot: ${spot}, neighbour: ${neighbour}, count: ${count}`)
-
       }
     }
-    console.log("after for")
     if (this._livingConditions(count,spot)) {
       this.newLive.push(spot)
     }
