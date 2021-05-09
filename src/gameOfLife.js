@@ -18,18 +18,18 @@ class Board {
   }
 
   tick = () => {
-    this._countNeighbours()
+    this.countNeighbours()
     this._updateLive()
   }
 
 
-  sortLive = (x) => {
+  _sortLive = (x) => {
     this.live = this.live.sort(function(a, b) {
       return a[x] - b[x];
     })
   };
 
-  _countNeighbours = () => {
+  countNeighbours = () => {
     this._calcLimits()
     for (var i= this._startRow; i<=this._endRow; i++) {
       for (var j = this._startCol; j<=this._endCol; j++) {
@@ -44,13 +44,13 @@ class Board {
   }
 
   _rowLimits = () => {
-    this.sortLive(0)
+    this._sortLive(0)
     this._startRow = this.live[0][0]-1
     this._endRow = this.live[this.live.length-1][0]+1
   }
 
   _colLimits = () => {
-    this.sortLive(1)
+    this._sortLive(1)
     this._startCol = this.live[0][1]-1
     this._endCol = this.live[this.live.length-1][1]+1
   }

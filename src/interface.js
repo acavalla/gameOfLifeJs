@@ -4,6 +4,7 @@ let context;
 let board;
 let liveColour;
 let deadColour;
+let tickTimer;
 
 canvas = document.getElementById('canvas');
 context = canvas.getContext('2d');
@@ -17,11 +18,6 @@ function init(){
 }
 
 function draw(){
-  drawGrid()
-  drawCells()
-}
-
-function drawGrid(){
   drawLines()
   context.stroke();
 }
@@ -46,8 +42,6 @@ function getSquare(canvas, evt) {
 canvas.addEventListener('click', function(evt) {
     var mousePos = getSquare(canvas, evt);
     var pixel = context.getImageData(mousePos.x, mousePos.y, 1, 1).data;
-    console.log(pixel)
-    console.log(liveColour.substr(4,3))
     if (pixel[0] !== parseInt(liveColour.substr(4,3))){
       fillSquare(mousePos.x, mousePos.y, liveColour)
       board.alive([(mousePos.y-1)/10, (mousePos.x-1)/10])
@@ -58,14 +52,36 @@ canvas.addEventListener('click', function(evt) {
 }, false);
 
 document.querySelector('.button').addEventListener('click', function(evt) {
+  toggleText()
+  })
+
+
+function toggleText() {
+   var el = document.getElementById('Go');
+   if (el.firstChild.data == "Go!") {
+     tickTimer = setInterval("evolve()", 500);;
+     el.firstChild.data = "Stop!";
+   } else {
+     clearInterval(tickTimer)
+     el.firstChild.data = "Go!";
+   }
+}
+
+function evolve() {
+  drawCells(deadColour)
+  board.tick()
+  checkSomeLive()
+  drawCells(liveColour)
+}
+
+function checkSomeLive(){
   if(board.live.length === 0){
-    //add to innerHTML 'Sorry! Game over :('
+    clearInterval(tickTimer)
+    document.getElementById("message").innerHTML="Sorry, game over :(";
   } else {
-    drawCells(deadColour)
-    board.tick()
-    drawCells(liveColour)
+    document.getElementById("message").innerHTML="";
   }
-})
+}
 
 function fillSquare(x, y, colour){
     context.fillStyle = colour
