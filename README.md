@@ -1,11 +1,11 @@
-![language-Javascript](https://img.shields.io/badge/language-javascript-red) ![version-2.7.2](https://img.shields.io/badge/version-2.7.2-yellow) ![build](https://img.shields.io/badge/build-passing-brightgreen)
+![language-Javascript](https://img.shields.io/badge/language-javascript-red) ![build](https://img.shields.io/badge/build-passing-brightgreen)
 
 
-#Conway's Game of Life
+# Conway's Game of Life
 
 How to run
 1) Clone this repo: `git clone https://github.com/acavalla/gameOfLifeJs.git`
-2) To run the test suite, run `yarn test`
+2) To run the test suite, run `yarn` followed by `yarn test`
 3) To play the game, run `open index.html` and play the game in the browser.
 
 
