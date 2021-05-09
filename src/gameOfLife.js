@@ -81,4 +81,4 @@ class Board {
     this.newLive = []
   }
 }
-// module.exports = Board;
+module.exports = Board;
