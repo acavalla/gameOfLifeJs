@@ -22,13 +22,6 @@ class Board {
     this._updateLive()
   }
 
-
-  _sortLive = (x) => {
-    this.live = this.live.sort(function(a, b) {
-      return a[x] - b[x];
-    })
-  };
-
   countNeighbours = () => {
     this._calcLimits()
     for (var i= this._startRow; i<=this._endRow; i++) {
@@ -54,6 +47,12 @@ class Board {
     this._startCol = this.live[0][1]-1
     this._endCol = this.live[this.live.length-1][1]+1
   }
+
+  _sortLive = (x) => {
+    this.live = this.live.sort(function(a, b) {
+      return a[x] - b[x];
+    })
+  };
 
   _labelNeighbours = (row, column) => {
     var count = 0
@@ -82,4 +81,4 @@ class Board {
     this.newLive = []
   }
 }
-module.exports = Board;
+// module.exports = Board;

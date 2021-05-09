@@ -31,14 +31,6 @@ function drawLines(){
   }
 }
 
-function getSquare(canvas, evt) {
-    var rect = canvas.getBoundingClientRect();
-    return {
-        x: 1 + (evt.clientX - rect.left) - (evt.clientX - rect.left)%10,
-        y: 1 + (evt.clientY - rect.top) - (evt.clientY - rect.top)%10
-    };
-}
-
 canvas.addEventListener('click', function(evt) {
     var mousePos = getSquare(canvas, evt);
     var pixel = context.getImageData(mousePos.x, mousePos.y, 1, 1).data;
@@ -52,11 +44,23 @@ canvas.addEventListener('click', function(evt) {
 }, false);
 
 document.querySelector('.button').addEventListener('click', function(evt) {
-  toggleText()
-  })
+  toggleStart()
+})
 
+function getSquare(canvas, evt) {
+    var rect = canvas.getBoundingClientRect();
+    return {
+        x: 1 + (evt.clientX - rect.left) - (evt.clientX - rect.left)%10,
+        y: 1 + (evt.clientY - rect.top) - (evt.clientY - rect.top)%10
+    };
+}
 
-function toggleText() {
+function fillSquare(x, y, colour){
+    context.fillStyle = colour
+    context.fillRect(x,y,8,8);
+}
+
+function toggleStart() {
    var el = document.getElementById('Go');
    if (el.firstChild.data == "Go!") {
      tickTimer = setInterval("evolve()", 500);;
@@ -70,11 +74,11 @@ function toggleText() {
 function evolve() {
   drawCells(deadColour)
   board.tick()
-  checkSomeLive()
+  liveCheck()
   drawCells(liveColour)
 }
 
-function checkSomeLive(){
+function liveCheck(){
   if(board.live.length === 0){
     clearInterval(tickTimer)
     document.getElementById('Go').firstChild.data = "Go!";
@@ -82,11 +86,6 @@ function checkSomeLive(){
   } else {
     document.getElementById("message").innerHTML="";
   }
-}
-
-function fillSquare(x, y, colour){
-    context.fillStyle = colour
-    context.fillRect(x,y,8,8);
 }
 
 function drawCells(colour){
