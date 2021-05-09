@@ -77,6 +77,7 @@ function evolve() {
 function checkSomeLive(){
   if(board.live.length === 0){
     clearInterval(tickTimer)
+    document.getElementById('Go').firstChild.data = "Go!";
     document.getElementById("message").innerHTML="Sorry, game over :(";
   } else {
     document.getElementById("message").innerHTML="";
