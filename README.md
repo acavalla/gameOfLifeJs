@@ -1,6 +1,7 @@
 How to run
 1) Clone this repo: git clone https://github.com/acavalla/gameOfLifeJs.git
-2) To run the test suite, run yarn test
+2) To run the test suite, run `yarn test`
+3) To play the game, run `open index.html` and play the game in the browser.
 
 
 The Game of life is a zero player game developed in the 70's by John Horton Conway. Check out the Wikipedia article for a full description. The evolving state of the game is determined by the initial configuration - some configurations become infinitely evolving constellations, others eventually evolve into a stable patterns, whilst others die off completely. It is commonly used as a tech test as it can be solved in many different ways that clearly show the level of the programmer.
