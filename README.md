@@ -2,7 +2,7 @@
 
 
 # Conway's Game of Life
-
+![game of life example](./assets/Gospers_glider_gun.gif)
 How to run
 1) Clone this repo: `git clone https://github.com/acavalla/gameOfLifeJs.git`
 2) To run the test suite, run `yarn` followed by `yarn test`
